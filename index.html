@@ -1,0 +1,36 @@
+Cookie在远程浏览器端存储数据并以此跟踪和识别用户的机制。从实现上说，Cookie是存储在客户端上的一小段数据，浏览器（即客户端）通过HTTP协议和服务器端进行Cooki
+当用于设置cookie时，document.cookie可以设置一个新的cookie字符串，这个cookie字符串会被解释并添加到当前现有的cookie集合中。其中名值对儿（name=value）是必须的（最好用encodeURIComponent()对name和value进行编码），其它字段在cookie的组成部分已做过介绍。
+
+通过document.cookie设置的cookie并不会覆盖现有的cookie，除非设置的cookie的name在现有cookie集合中已经存在，并且path/domain/secure这几个选项一定要和旧cookie 保持一样。否则不会修改旧cookie，而是添加了一个新的 cookie。
+
+<h3>cookie的组成</h3><hr>
+名称和值 name = value: 必填，Web服务器可以创建任意的name=value关联，浏览器在后继对站点的访问中会将其送会给web服务器。<hr>
+域  domain：可选。表示该cookie对于哪个域是有效的。所有向该域发送的请求中都会包含这个cookie信息。<hr>
+路径  path：可选。通过这个字段可以为服务器上特定的文档分配cookie。如果path字段是一个URL路径前缀，就可以附加一个cookie。<hr>
+失效时间  expires（新版的cookie规范中是max-age字段）：可选<hr>
+失效时间  expires（新版的cookie规范中是max-age字段）：可选<hr>
+安全标志  secure：可选。<hr>
+HTTP专用  HttpOnly：可选。该字段只能在服务端设置，表示该cookie是否能通过JS（BOM的document.cookie接口）去访问。默认情况下HttpOnly字段为空，表示可以通过JS访问该cookie。<hr>
+<h3>注意</h3>：域、路径、失效时间、安全标志（secure）和HttpOnly字段都是服务器给浏览器的指示，告诉浏览器如何存储和发送cookie，这些参数并不会作为发送到服务器的cookie信息的一部分，只有cookie中的名值对儿（name=value）才会被发送。<hr>
+
+<h2>Cookie 的特点</h2><hr>
+1.	服务器通过 Set-Cookie 响应头设置 Cookie.<hr>
+2.	浏览器得到 Cookie 之后，每次请求都要带上 Cookie.<hr>
+3.	服务器读取 Cookie 就知道登录用户的信息（email）.<hr>
+问题
+1.	我在 Chrome 登录了得到 Cookie，用 Safari 访问，Safari 会带上 Cookie 吗<hr>
+no
+2.	Cookie 存在哪<hr>
+Windows 存在 C 盘的一个文件里<hr>
+3.	Cookie会被用户篡改吗？<hr>
+可以，下节课会讲 Session 来解决这个问题，防止用户篡改<hr>
+4.	Cookie 有效期吗？<hr>
+默认有效期20分钟左右，不同浏览器策略不同<hr>
+后端可以强制设置有效期，具体语法看 MDN<hr>
+5.	Cookie 遵守同源策略吗？<hr>
+也有，不过跟 AJAX 的同源策略稍微有些不同。<hr>
+当请求 qq.com 下的资源时，浏览器会默认带上 qq.com 对应的 Cookie，不会带上 baidu.com 对应的 Cookie<hr>
+当请求 v.qq.com 下的资源时，浏览器不仅会带上 v.qq.com 的Cookie，还会带上 qq.com 的 Cookie<hr>
+另外 Cookie 还可以根据路径做限制，请自行了解，这个功能用得比较少。<hr>
+
+
